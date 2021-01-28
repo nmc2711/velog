@@ -116,20 +116,20 @@ const [list, setList] = useState<ListType[]>([]);
 ```
 
 > 스크롤 이동시 0.05초 간격으로 scrollEvtHdr 이벤트를 발생시키되
+> 이벤트 한번 발생 후 클리어 시켜주는 작용이 필요하다 (무한 이벤트 실행 방지)
 
 ```sh
-export const checkBounce = (callback: Function, delay: number) => {
-let timeout: number;
-
-return (...args: any[]) => {
+export const checkBounceFn = (callback: Function, delay: number) => {
+  let timeout: number
+  return () => {
     const later = () => {
-        clearTimeout(timeout);
-        callback(...args); // ..args is an event
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, delay);
-    };
-};
+      clearTimeout(timeout)
+      callback()
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, delay)
+  }
+}
 ```
 
 > SideEffect 를 통한 스크롤 event 삽입과 소멸
@@ -137,15 +137,16 @@ return (...args: any[]) => {
 ```sh
 useEffect(() => {
     let fetching = false;
+    const checkBounce = checkBounceFn(() => scrollEvtHdr(fetching), 50);
     window.addEventListener(
       "scroll",
-      checkBounce(() => scrollEvtHdr(fetching), 50)
+      checkBounce
     );
     fetchDataList();
     return () => {
       window.removeEventListener(
         "scroll",
-        checkBounce(() => scrollEvtHdr(fetching), 50)
+        checkBounce
       );
       fetching = true;
     };
@@ -178,7 +179,7 @@ useEffect(() => {
 ```js
 //idex.tsx
 import React, { useState, useEffect, useCallback } from 'react'
-import { detectWindowBottom, checkBounce } from 'lib/common_fn'
+import { detectWindowBottom, checkBounceFn } from 'lib/common_fn'
 
 interface ListType {
   key: number;
@@ -224,15 +225,16 @@ const [list, setList] = useState<ListType[]>([]);
 
   useEffect(() => {
     let fetching = false
+     const checkBounce = checkBounceFn(() => scrollEvtHdr(fetching), 50);
     window.addEventListener(
       'scroll',
-      checkBounce(() => scrollEvtHdr(fetching), 50)
+      checkBounce
     )
     fetchDataList()
     return () => {
       window.removeEventListener(
         'scroll',
-        checkBounce(() => scrollEvtHdr(fetching), 50)
+        checkBounce
       )
       fetching = true
     }
@@ -275,12 +277,12 @@ export const detectWindowBottom = () => {
   return windowBottom >= docHeight - diff
 }
 
-export const checkBounce = (callback: Function, delay: number) => {
+export const checkBounceFn = (callback: Function, delay: number) => {
   let timeout: number
-  return (...args: any[]) => {
+  return () => {
     const later = () => {
       clearTimeout(timeout)
-      callback(...args)
+      callback()
     }
     clearTimeout(timeout)
     timeout = setTimeout(later, delay)
