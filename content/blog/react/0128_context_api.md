@@ -1,5 +1,5 @@
 ---
-title: '[ Ch # 02 ] Infinite scrolling'
+title: '[ Ch # 02 ] Context Api 구조설계 '
 date: 2021-01-28 18:00:00
 category: 'react'
 draft: false
