@@ -9,7 +9,7 @@ export const Header = ({ title, location, rootPath }) => {
     isRoot && (
       <h1 className="home-header">
         <Link to={`/`} className="link">
-          {title}
+          <div dangerouslySetInnerHTML={{ __html: title }} />
         </Link>
       </h1>
     )
