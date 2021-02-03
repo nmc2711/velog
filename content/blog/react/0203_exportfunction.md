@@ -57,7 +57,7 @@ const Main = function() {
       <React.Fragment>
          <button onClick={() => setState('convertTrue')}>buttonTrue</button>
          // console.log .. true
-         <button onClick={() => setState('converFalse')}>buttonFalse</button>
+         <button onClick={() => setState('convertFalse')}>buttonFalse</button>
          // console.log .. false
       <React.Fragment>
 
