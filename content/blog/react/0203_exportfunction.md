@@ -26,7 +26,7 @@ export const mainCommonFn = (type: string) => {
     }
   }, [type])
 
-  // jsx 또는 tsx의 속성을 사용하려면 return 을 통한 반환값을 줘야한다.
+  // jsx 또는 tsx의 속성을 사용하려면 return 을 통한 반환값을 줘야한다. (즉,컴포넌트화를 시키는것)
   // 이성질을 이용해여 공통함수의 껍데기를 정의하고 그안에서 function을 분리하여 return으로 추출하게 되면
   // react요소를 사용한 함수를 뽑아낼 수 있다.
   return { changeBoolean }
