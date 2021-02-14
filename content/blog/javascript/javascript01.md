@@ -1,6 +1,6 @@
 ---
 title: 'Algorithm Challenge 01'
-date: 2020-07-02 16:21:13
+date: 2020-02-11 16:21:13
 category: 'javascript'
 draft: false
 ---
@@ -25,7 +25,7 @@ Code의 세상 안으로!(En-Coding)
 
 ```jsx
 1. 문제파악 : 출력값 oo섬의 이름 이며 문자열이다.
-2. 제공된 자료 분석 ''을통한 구분값이 배열가 유사함,1과 0을 제시 2진법의 힌트,EnCoding 여기서 약간 아리송? 일단 참고
+2. 제공된 자료 분석 ''을통한 구분값이 배열과 유사함,1과 0을 제시 2진법의 힌트,EnCoding 여기서 약간 아리송? 일단 참고
 
 let answer = ""
 let data = [
@@ -58,8 +58,8 @@ console.log("transformItem", item.replace(/ /g, "").replace(/\+/g,'1').replace(/
 // transformItem 1010101
 이제 여기서 살짝어려웠는데 `2진수의 숫자타입을 문자로 변환`하는게 있을까라고 생각해봐야할것이다.
 MDN 을 무한 검색중 `String.fromCharCode()` 메서드는 UTF-16 코드 유닛의 시퀀스로부터 문자열을 생성해 반환 서칭
-UTF-16 코드 유닛 ? type은 number일것이다.
-console.log("codeItem", String.fromCharCode((parseInt(item.replace(/ /g, "").replace(/\+/g,'1').replace(/-/g,'0'))));
+UTF-16 코드 유닛 ? type은 number일것이다. parseInt를 사용하여 이진수인 number 타입으로 변환
+console.log("codeItem", String.fromCharCode((parseInt(item.replace(/ /g, "").replace(/\+/g,'1').replace(/-/g,'0'),2)));
 // return ...
 //codeTransferItem J
 //codeTransferItem E
@@ -67,7 +67,7 @@ console.log("codeItem", String.fromCharCode((parseInt(item.replace(/ /g, "").rep
 //codeTransferItem U
 
 여기서 정답은 문자열 반환이었으므로 위에 answer 이라는 빈 변수를 주어 += 복합연산자로 for of문 내에서 붙여서 출력하자
-answer += String.fromCharCode((parseInt(item.replace(/ /g, "").replace(/\+/g,'1').replace(/-/g,'0')));
+answer += String.fromCharCode((parseInt(item.replace(/ /g, "").replace(/\+/g,'1').replace(/-/g,'0'),2));
 }
 
 console.log(answer)
