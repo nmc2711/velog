@@ -35,4 +35,19 @@ function fetchNum(id: string): Promise<number> {
     resolve(100)
   })
 }
+
+// Default Parameter (아무런 값을 전달하지않아도 기본 타입과 파라미터를 전달가능)
+function printMessage(message: string = 'default message') {
+  console.log(message)
+}
+printMessage()
+
+ // Rest Parameter (동일한 타입의 인자를 전달할때)
+  function addNumbers(...numbers: number[]): number {
+    return numbers.reduce((a,b)=>a+b)
+  }
+
+  (x)console.log(addNumbers(1, 2, "ss")); //error
+  console.log(addNumbers(1, 2, 3, 4)); //10
+  console.log(addNumbers(1, 2)); //3
 ```
