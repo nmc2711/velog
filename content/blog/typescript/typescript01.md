@@ -1,5 +1,5 @@
 ---
-title: '[ Ch # 01 ] Infinite scrolling'
+title: '[ Ch # 01 ] TypeScript'
 date: 2021-01-27 18:21:13
 category: 'typescript'
 draft: false
@@ -42,3 +42,9 @@ console.log('hello world !')
 ```
 tsc main.ts
 ```
+
+js 파일이 떨궈지며 읽혀진다.
+
+이러한 컴파일 작용이 필요하다.
+
+2장부터는 타입을 지정해가며 해보려고한다.
