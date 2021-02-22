@@ -66,10 +66,11 @@ import useTimer from './timer'
 
 const Main = function() {
   const { time, startTimeout, stopTimeout, clearTimer } = useTimer(0, 35)
-  // theme 상태값과 toggle 함수 객체분해
+  // timer  객체 구조화를 통한 접근
+
   return (
     <div>
-      <h1>리액트 타이머</h1>
+      <h1>타이머</h1>
       <h3>{time}</h3>
       <button onClick={startTimeout}>시작</button>
       <button onClick={stopTimeout}>멈춤</button>
@@ -78,3 +79,5 @@ const Main = function() {
   )
 }
 ```
+
+`youtube:https://youtu.be/EVB8hcTu5VE`
