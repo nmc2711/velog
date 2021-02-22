@@ -1,17 +1,27 @@
 ---
-title: '[ Ch # 06 ] TypeScript Basic Type'
-date: 2021-01-27 18:21:13
+title: 'TypeScript Basic 6'
+date: 2021-02-01 18:21:13
 category: 'typescript'
 draft: false
 ---
 
-- Type Inference ? 타입추론
+## 타입스크립트 BASIC 06
+
+### Type Inference , Type Asserssion
+
+<BR />
+
+**1. Type Inference**
+
+- 타입스크립트가 코드를 해석해 나가는 동작 ( 타입추론 )
 
 ```tsx
 let text = 'hello'
 text = 'ok'
 (x) text = 1
-//함수의 파라미터쪽을 자세히보면 ...이 표시되어있는 인자쪽에 any의 타입값이 기본세팅되어있다.
+
+// 인자값에 타입선언을 하지 않는다면 ?
+// 함수의 파라미터쪽을 자세히보면 ...이 표시되어있는 인자쪽에 any의 타입값이 기본세팅되어있다.
 function print(message:string){
     console.log(message)
 }
@@ -29,14 +39,20 @@ function add(x:number,y:number):number {
 }
 ```
 
-- Type Asserssion ? 타입추론강요 (비추.. 피하는 스킬 습득 및 인지)
+<BR />
+
+**2. Type Asserssion**
+
+- Type Asserssion ? 타입추론강요 (비추.. 피하는 스킬 습득 및 인지) 및 타입을 강제적으로 명시
 
 ```tsx
 function jsStrFn(): any {
   return 'string'
 }
+
 const result = jsStrFn()
 // type을 확신하여 알고 있을때 사용
+
 console.log((result as string).length) //5
 console.log((<string>result).length) //5
 
