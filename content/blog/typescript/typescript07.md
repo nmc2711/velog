@@ -1,11 +1,11 @@
 ---
 title: 'TypeScript Simple Project '
-date: 2021-02-24 18:21:13
+date: 2021-02-03 18:21:13
 category: 'typescript'
 draft: false
 ---
 
-## Simple Project # 1
+## Simple Project
 
 ### 계산함수 구현하기
 
@@ -95,5 +95,5 @@ function printLoginState(callState: ResourceLoadState) {
       throw new Error(`unknown State : ${state}`)
   }
 }
-printLoginState({ state: 'success', response: { body: 'mainListCall' } }) // 'mainListCall'
+printLoginState({ state: 'success', response: { body: 'mainListCall' } }) // 'mainListCall..^^'
 ```
