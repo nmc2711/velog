@@ -57,12 +57,15 @@ const Main = function() {
   const [colorChange, setColorChange] = useState(false)
 
   const getElement = targetElement => {
+    // element 속성을 가져오기
     setElement(targetElement)
   }
 
   const position = useMouseChecker(element)
+  // useMouseChecker 포지션 가져오기
 
   useEffect(() => {
+    //마우스 위치에따른 배경컬러 바뀌는 상황 간단구현
     if (
       position &&
       position.x > 100 &&
