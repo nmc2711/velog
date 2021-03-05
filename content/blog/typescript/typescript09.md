@@ -50,6 +50,85 @@ class CoffeeMaker {
   }
  }
 }
-const maker = new CoffeeMaker(32)
+maker.makeMachine(50)
 maker.fillCoffeBeans(32)
+maker.makeCoffee(6)
+```
+
+## More Detail Getter & Setter
+
+```tsx
+class User {
+  firstName: string
+  lastName: string
+  fullName: string
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName
+    this.lastName = lastName
+    this.fullName = `${firstName} ${lastName}`
+  }
+}
+
+const user = new User('Hanwang', 'han')
+console.log(user.fullName) // Hanwang han
+
+ 만약, 여기서 생성된 객체의 constructor에 접근하여 firstName 을 변경한다면 ? 이미할당한 객체의 요소는 바뀌지않음
+ user.firstName = 'david'
+ console.log(user.fullName) // Hanwang han
+```
+
+이에 대한 개선 방향으론..
+
+```tsx
+class User {
+  firstName: string
+  lastName: string
+  get fullName(): string {
+    return `${firstName} ${lastName}`
+  }
+  // constructor 에서 생성하는 것이 아닌 get을 통한 반환으로 fullName을 생성한다.
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName
+    this.lastName = lastName
+  }
+}
+
+const user = new User('Hanwang', 'han')
+console.log(user.fullName) // Hanwang han
+user.firstName = 'david'
+console.log(user.fullName) // david han
+```
+
+getter와 setter 함수로 코드를 추가해보고 constructor에 속성부여로 코드를 간결하게 해보자.
+
+```tsx
+class User {
+  get fullName(): string {
+    return `${firstName} ${lastName}`
+  }
+
+  private internalAge = 4
+
+  get age(): number {
+    return this.internalAge
+  }
+
+  set age(num: number) {
+    if (num < 0) {
+      alert('1살이상이어야해...')
+    } else {
+      this.internalAge = num
+    }
+  }
+
+  constructor(private firstName: string, public lastName: string) {
+    // 생성자에서 private와 같은 속성을 부여함으로 자동으로 멤버변수로 설정 가능하다.
+  }
+}
+
+const user = new User('Hanwang', 'han')
+user.age = 6
+//setter을 통한 설정
+console.log(user.age) // 6
+//getter을 통한 접근
 ```
