@@ -74,13 +74,18 @@ type CoffeeCup = {
   shots: number
   hasMilk: boolean
 }
-
+// interface 타입선언에서 규약을 맺는 역활
 interface CoffeeMaker {
   makeCoffee(shots: number): CoffeeCup
 }
-// interface 타입선언에서 규약을 맺는 역활
 
-class CoffeeMachine implements CoffeeMaker {
+interface CommercialCoffeeMaker {
+  makeCoffee(shots: number): CoffeeCup
+  fillCoffeBeans(beans: number): void
+  clean(): void
+}
+
+class CoffeeMachine implements CoffeeMaker, CommercialCoffeeMaker {
   private BEANS_GRAMM_PER_SHOT: number = 7
   private coffeeBeans: number = 0
 
@@ -99,12 +104,16 @@ class CoffeeMachine implements CoffeeMaker {
     this.coffeeBeans += beans
   }
 
+  clean() {
+    console.log('커피머신 청소중...')
+  }
+
   private grindBeans(shots: number) {
     console.log(`grinding beans for ${shots}`)
-    if (this.coffeeBeans < shots * CoffeeMaker.BEANS_GRAMM_PER_SHOT) {
+    if (this.coffeeBeans < shots * CoffeeMachine.BEANS_GRAMM_PER_SHOT) {
       throw new Error('커피콩이 부족한데여..?')
     }
-    this.coffeeBeans -= shots * CoffeeMaker.BEANS_GRAMM_PER_SHOT
+    this.coffeeBeans -= shots * CoffeeMachine.BEANS_GRAMM_PER_SHOT
   }
 
   private preheat(): void {
@@ -124,11 +133,40 @@ class CoffeeMachine implements CoffeeMaker {
     return this.extract(shots)
   }
 }
-const maker: CoffeeMachine = CoffeeMachine.makeMachine(32)
-maker.fillCoffeBeans(32)
-maker.makeCoffee(2)
 
-const maker2: CoffeeMaker = CoffeeMachine.makeMachine(32)
-maker.fillCoffeBeans(32) // error 규약하지 않은 함수는 사용불가
-maker.makeCoffee(2)
+// 인터페이스에서 정의된 메서드만 사용가능
+// const maker2: CommercialCoffeeMaker = CoffeeMachine.makeMachine(32)
+// maker2.fillCoffeBeans(32)
+// maker2.makeCoffee(2)
+// maker2.clean()
+
+//
+class AmateurUser {
+  constructor(private machine: CoffeeMaker) {}
+  makeCoffee() {
+    const coffee = this.machine.makeCoffee(2)
+    console.log(coffee)
+  }
+}
+
+class ProBarista {
+  constructor(private machine: CommercialCoffeeMaker) {}
+  makeCoffee() {
+    const coffee = this.machine.makeCoffee(2)
+    console.log(coffee)
+    this.machine.fillCoffeeBeans(45)
+    this.machine.clean()
+  }
+}
+const maker: CoffeeMachine = CoffeeMachine.makeMachine(32)
+
+const amateur = new AmateurUser(maker)
+const pro = new ProBarista(maker)
+
+// 동일한 coffee machine에서 제약된 interface 를 각각 사용가능
+
+amateur.makeCoffee(7)
+pro.makeCoffee(8)
+pro.fillCoffeBeans(45)
+pro.clean()
 ```
