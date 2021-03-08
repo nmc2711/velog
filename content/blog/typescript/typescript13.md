@@ -133,4 +133,6 @@ class SweetCoffeeLatteMaker extends CoffeeMachine {
     return this.milk.makeMilk(sugarAdded)
   }
 }
+// milk, sugar  모두 기능별로 정의된 class를 통해 추출하고 결국 상속받은 CoffeeMachine의 makeCoffee 매서드를 이용해
+// SweetCoffeeLatte를 생성
 ```
