@@ -7,15 +7,20 @@ draft: false
 
 ## Client Side Restful Api Fetch 구조설계
 
-// 먼저, 가장 필수는 BackEnd 파트와의 협의 입니다. 각 회사별 시스템이 다를테니 구조는 항상 유연합니다.
-// 예를 들어 BackEnd 파트 와의 협의를 마치고 정의된 API 명세서를 확인해 보겠습니다.
-// API Domain: 'https://www.example-api.com/'
-// API명 : '메인페이지 컨텐츠 리스트'
-// API URL : '/main/list'
-// API METHOD : 'GET'
-// 항상 json 타입의 문자열로 {header:{exampleToken:"exampleToken"},method:'get'}} 해더와 method 타입의 option을 요구합니다.
-// 파라미터로 필수값 number 타입의 page 와 string 타입의 category를 요구합니다.
-// status로 성공한다면 200, 실패시 404 를 반환
+npm install node-fetch
+=> window.fetchNode.js 를 가져 오는 경량 모듈
+
+// using fetch에 관한 기본지식 https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch
+
+// 먼저, 가장 필수는 BackEnd 파트와의 협의 입니다. 각 회사별 시스템이 다를테니 구조는 항상 유연합니다.<br />
+// 예를 들어 BackEnd 파트 와의 협의를 마치고 정의된 API 명세서를 확인해 보겠습니다.<br />
+// API Domain: 'https://www.example-api.com/'<br />
+// API명 : '메인페이지 컨텐츠 리스트'<br />
+// API URL : '/main/list'<br />
+// API METHOD : 'GET'<br />
+// 항상 json 타입의 문자열로 {header:{exampleToken:"exampleToken"},method:'get'}} 해더와 method 타입의 option을 요구합니다.<br />
+// 파라미터로 필수값 number 타입의 page 와 string 타입의 category를 요구합니다.<br />
+// status로 성공한다면 200, 실패시 404 를 반환<br />
 // 성공한다면 반환값으로 result 와 data json을 반환해줍니다.
 
 ```ts
