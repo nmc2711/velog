@@ -7,4 +7,4 @@ draft: false
 
 https://sanghan-vue-scroll-rest.netlify.app/
 
-(Client Rest Api 적용 및 리스트 무한 스크롤링 구현)
+(Client Rest Api 적용 및 리스트 무한 스크롤링 구현)!
