@@ -18,4 +18,6 @@ UI 컴포넌트를 독립적으로 개발함으로써, 컴포넌트 재사용성
 pr: https://github.com/nmc2711/react-storybook
 <br />
 => checkbox (구현완료) <br />
-=> selectbox (진행중)
+=> search (구현완료) <br />
+=> selectbox (수정중)
+=> infinitescroll (진행중) <br />
