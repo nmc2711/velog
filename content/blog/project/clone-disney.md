@@ -15,6 +15,9 @@ draft: false
 3. 메인 초안 작업 및 슬릭 슬라이더 적용
 
 2 day <br />
-시작시간 06:20 - 07:00
+시작시간 06:20 - 07:05
+
+1. 슬라이더 디자인 추가 작업
+2. 메인 그리드 뱃지 작업
 
 https://github.com/nmc2711/disney-react-clone
