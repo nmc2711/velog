@@ -27,4 +27,10 @@ draft: false
 2. 라우터 작업
 3. 디테일 페이지 작업
 
+4day <br />
+
+시작시간 06:00 - 06:50
+
+1. 로그인 페이지 ui 구현작업
+
 https://github.com/nmc2711/disney-react-clone
