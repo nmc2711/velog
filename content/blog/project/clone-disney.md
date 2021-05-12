@@ -32,5 +32,6 @@ draft: false
 시작시간 06:00 - 06:50
 
 1. 로그인 페이지 ui 구현작업
+2. firebase 모델구조 및 데이터 리솔팅
 
 https://github.com/nmc2711/disney-react-clone
