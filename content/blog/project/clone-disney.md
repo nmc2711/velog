@@ -1,5 +1,5 @@
 ---
-title: '[코드챌린지 5 days]디지니 plus 해외 사이트 클론코딩 -[1][2][3][4]'
+title: '[코드챌린지 5 days]디지니 plus 해외 사이트 클론코딩 -[1][2][3][4][5 finish]'
 date: 2021-05-10 16:21:13
 category: 'project'
 draft: false
@@ -33,5 +33,18 @@ draft: false
 
 1. 로그인 페이지 ui 구현작업
 2. firebase 모델구조 및 데이터 리솔팅
+
+5day <br />
+
+시작시간 13:00 - 19:50
+
+1. redux tooltip store 및 모델링 작성 및 연동
+2. detail, movies 페이지 firebase 실데이터 연동
+3. 헤더 구글 아이디 로그인 기능 추가 및 refresh 해당 유지로직(개선필요)
+
+마무리 : 사실 이 작은 프로젝트를 하는 이유는 .. <br />
+최근 유지 보수의 실무를 하면서 프로젝트를 시작부터 마무리 짓는 활동이 적어져서 <br />
+감을 유지하고 싶었다. 또한 redux tool tip 의 매력과 허점은 꽤 많치만 firebase를 통한 간단 로그인 구현<br />
+도 해보는 뭔가 재미진 프로젝트였다. 이런 기회를 많이 만드려고한다.<br />
 
 https://github.com/nmc2711/disney-react-clone
