@@ -1,6 +1,6 @@
 ---
 title: '[ Ch # 15 ] Storybook을 통한 재사용 UI 및 테스트!'
-date: 2021-04-25 18:21:13
+date: 2021-06-10 18:21:13
 category: 'react'
 draft: false
 ---
@@ -17,7 +17,9 @@ UI 컴포넌트를 독립적으로 개발함으로써, 컴포넌트 재사용성
 
 pr: https://github.com/nmc2711/react-storybook
 <br />
-=> checkbox (구현완료) <br />
-=> search (구현완료) <br />
-=> selectbox (수정중) <br />
-=> infinitescroll (진행중) <br />
+
+- checkbox (구현완료) <br />
+- search (구현완료) <br />
+- selectbox (수정중) <br />
+- toast (구현완료) <br />
+- infinitescroll (진행중) <br />
