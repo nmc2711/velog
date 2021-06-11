@@ -23,4 +23,5 @@ pr: https://github.com/nmc2711/react-storybook
 - selectbox (수정중) <br />
 - toast (구현완료) <br />
 - tooltip (구현완료) <br />
+- pagination (기능 구현완료) <br />
 - infinitescroll (진행중) <br />
