@@ -26,3 +26,4 @@ pr: https://github.com/nmc2711/react-storybook
 - pagination (기능 구현완료) <br />
 - infinitescroll (기능 구현완료) <br />
 - modal (구현완료) <br />
+- case별 confirm (구현완료) <br />
