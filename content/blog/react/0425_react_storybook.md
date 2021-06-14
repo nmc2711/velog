@@ -25,3 +25,4 @@ pr: https://github.com/nmc2711/react-storybook
 - tooltip (구현완료) <br />
 - pagination (기능 구현완료) <br />
 - infinitescroll (기능 구현완료) <br />
+- modal (구현완료) <br />
