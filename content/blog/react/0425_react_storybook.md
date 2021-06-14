@@ -15,7 +15,8 @@ UI 컴포넌트를 독립적으로 개발함으로써, 컴포넌트 재사용성
 - 작성 코드 및 ui를 시각적으로 확인 가능 <br />
 - 디자인 가이드를 바탕으로 팀내 ui advice 환경 구축 가능 <br />
 
-pr: https://github.com/nmc2711/react-storybook
+git: https://github.com/nmc2711/react-storybook<br />
+pr: https://yesreact-storybook.netlify.app/
 <br />
 
 - checkbox (구현완료) <br />
