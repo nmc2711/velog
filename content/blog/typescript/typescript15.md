@@ -5,4 +5,5 @@ category: 'typescript'
 draft: false
 ---
 
+타입스크립트로 스택구현하기
 https://codesandbox.io/s/ts-stack-9q3ec
