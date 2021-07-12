@@ -50,6 +50,7 @@ class StackImpl implements Stack {
       throw new Error('Stack이 비었습니다.')
     }
     const node = this.head
+    // next에 이전 값을 기억한 원리로 node를 이전값으로 변경시키는 방식으로 pop구현
     this.head = node.next
     this._size--
     return node.value
@@ -62,6 +63,7 @@ stack.push('2번박스')
 stack.push('3번박스')
 while (stack.size !== 0) {
   console.log(stack.pop())
+  // 마지막것부터 차례로 뽑아내고 stack의 길이가 0이 되면 중지
 }
 
 stack.pop()
