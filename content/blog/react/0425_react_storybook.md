@@ -1,6 +1,6 @@
 ---
 title: '[ Ch # 15 ] Storybook을 통한 재사용 UI 및 테스트!'
-date: 2021-07-13 18:21:13
+date: 2021-08-05 18:21:13
 category: 'react'
 draft: false
 ---
@@ -29,4 +29,5 @@ pr: https://yesreact-storybook.netlify.app/
 - infinitescroll + intersectionobserve + debounce (기능 구현완료) <br />
 - modal (구현완료) <br />
 - case별 confirm (구현완료) <br />
-- drag & drop (기능 구현완료)
+- drag & drop (기능 구현완료) <br />
+- accordian (구현완료)
