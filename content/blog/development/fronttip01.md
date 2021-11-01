@@ -31,7 +31,8 @@ font-face에 설정하는것인가?</b> <br /><br />
 (코드 순서를 바꿔주어 우선순위 적용 등)
 다른이점으로는 "TFF"를 선언해줄시 구형브라우저를 지원한다는 장점이 있다. </b>
 
-```예시코드
+```
+  예시코드
   url('${font.src}-${weightStr}.woff2') format('woff2'),
   url('${font.src}-${weightStr}.woff') format('woff'),
   url('${font.src}-${weightStr}.ttf') format('truetype')
