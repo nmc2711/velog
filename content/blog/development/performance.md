@@ -116,7 +116,8 @@ myBox.style.width = '500px'
 ```
 
 ![](./images/cssup.png) <br />
-!! 리페인트 발생 <br />
+!! 레이아웃(리플로우) 발생 <br />
+
 CSS 속성값 : height, width, left, top, font-size, line-height 등 <br />
 
 #### 요소에 기하적인 영향을 주지 않는 CSS 속성값
@@ -126,7 +127,7 @@ myBox.style.backgroundColor = 'orange'
 ```
 
 ![](./images/cssdown.png) <br />
-!! 레이아웃(리플로우) 발생 <br />
+!! 리페인트 발생 <br />
 CSS 속성값 : background-color, color, visibility, text-decoration 등 <br />
 
 ### \*\* 해결책 1) 위와같이 레이아웃이 발생하면 실행 시간만큼 렌더링 시간도 늘어나게 된다.
