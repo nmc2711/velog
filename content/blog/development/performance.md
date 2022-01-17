@@ -130,6 +130,232 @@ myBox.style.backgroundColor = 'orange'
 !! 리페인트 발생 <br />
 CSS 속성값 : background-color, color, visibility, text-decoration 등 <br />
 
-### \*\* 해결책 1) 위와같이 레이아웃이 발생하면 실행 시간만큼 렌더링 시간도 늘어나게 된다.
+#### 위와같이 레이아웃이 발생하면 실행 시간만큼 렌더링 시간도 늘어나게 된다. 따라서 불필요한 레이아웃(리플로우)이 발생하지 않도록 신경 써야 한다.
 
-### 따라서 불필요한 레이아웃(리플로우)이 발생하지 않도록 신경 써야 한다.
+<br /><br />
+
+---
+
+<br /><br />
+전까지 브라우저 로딩 과정하는 과정을 소개하였다. <br />
+
+지금 부터 <b>웹페이지 로딩 최적화</b>에 대하여 알아보려고 한다. <br /><br /><br />
+
+### 1) 블록 차단 및 리소스(CSS, 자바스크립트) 최적화
+
+브라우저 로딩 과정에서 파싱 중 블록 리소스가 발생할 수 있으며, CSS와 자바스크립트가 블록 리소스에 해당한다고 했다. <br />
+최적화의 첫 번째 단계는 이 블록 리소스를 최적화하는 것이다. <br />
+
+```
+  // plus +
+  html 파서는 스크립트 태그를 만나면 dom 생성 프로세스를 중지하고 자바스크립트 엔진에 제어 권한을 넘긴다.
+  자바스크립트 엔진의 실행이 완료된 후 브라우저가 중지했던 시점부터 dom 생성을 재개한다.
+  다시말해, 요소가 아직 처리되지 않았기 때문에 스크립트 블록이 페이지의 뒷부분에서 어떠한 요소도 찾을 수 없게 된다.
+```
+
+1. <b>\* CSS 최적화</b><br />
+
+   블록 차단 리소스는 곧 렌더링 차단 요소에 속한다.<br />
+   렌더 트리를 구성하기 위해서는 DOM 트리와 CSSOM 트리가 필요하다.<br />
+   DOM 트리는 파싱 중에 태그를 발견할 때마다 순차적으로 구성할 수 있지만, CSSOM 트리는 CSS를 모두 해석해야 구성할 수 있다.<br />
+   즉, CSSOM 트리가 구성되지 않으면 렌더 트리를 만들지 못하고 렌더링이 차단된다.<br />
+   이러한 이유로 CSS는 렌더링 차단 리소스라고 하며, 렌더링이 차단되지 않도록 CSS는 항상 HTML 문서 최상단(`<head> 아래`)에 배치한다.<br />
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="kr">
+     <head>
+       <link href="style.css" rel="stylesheet" />
+       <title>Yes, React</title>
+     </head>
+   </html>
+   ```
+
+   그리고 특정 조건에서만 필요한 CSS가 있을 때 미디어 쿼리를 사용하면 불필요한 블로킹을 방지할 수 있다.<br />
+   예를 들어 다음과 같이 페이지를 인쇄하거나(print.css) 화면이 세로 모드일 때(portrait.css) 사용하는 CSS가 있을 때,<br />
+   해당 스타일을 사용하는 경우에만 로드할 수 있도록 `<script> 태그`에 media 속성을 명시하여 사용한다.<br />
+
+   ```js
+     <link href="style.css" rel="stylesheet">
+     <link href="print.css" rel="stylesheet" media="print" >
+     <link href="style.css" rel="stylesheet" media="width: 1024px">
+     <link href="portrait.css" rel="stylesheet" media="orientation:portrait" />
+   ```
+
+   외부 스타일시트를 가져올 때 사용하는 @import 사용은 피한다.<br />
+   아래와 같이 @import를 사용했을 때 브라우저는 스타일시트를 병렬로 다운로드 할 수 없기 때문에 로드 시간이 늘어날 수 있다.<br />
+
+   ```js
+    @import url("out.css");
+   ```
+
+2. <b>\* 자바스크립트 최적화</b><br /><br />
+   자바스크립트는 DOM 트리와 CSSOM 트리를 동적으로 변경할 수 있기 때문에 HTML 파싱을 차단하는 블록 리소스이다.<br />
+   `<script> 태그`를 만나면 스크립트가 실행되며 그 이전까지 생성된 DOM에만 접근할 수 있다.<br />
+   그리고 스크립트 실행이 완료될 때까지 DOM 트리 생성이 중단된다.<br />
+   외부에서 가져오는 자바스크립트의 경우에는 모든 스크립트가 다운로드되고 실행될 때까지 DOM 트리 생성이 중단된다.<br />
+   이러한 이유로 자바스크립트도 렌더링 차단 리소스라고 하며, HTML 문서 최하단(`</body> 직전`)에 배치한다.<br />
+
+   ```html
+   <body>
+     <div>Yes, React</div>
+     <script src="react.js" type="text/javascript"></script>
+   </body>
+   ```
+
+   만약 `<head> 아래`에 포함되어 있거나 HTML 내부에 `<script> 태그`가 포함되어 있을 때도 HTML 파싱을 멈추지 않게 할 수 있다.<br />
+   `<script> 태그`에 defer나 async 속성을 명시하면 스크립트가 DOM 트리와 CSSOM 트리를 변경하지 않겠다는 의미이기 때문에<br />
+   브라우저가 파싱을 멈추지 않는다.<br />
+   단, 이 속성들은 브라우저 지원 범위가 한정적이므로 사용에 유의한다.<br />
+
+   ```
+    // plus +
+    async: 스크립트 로드만 병력적으로 실행하므로 실행 순서를 보장할 수없다.
+    defer: 병렬적으로 파일을 로드하면서 모든 dom이 로드된 후에 스크립트를 실행 하므로 실행 순서가 보장된다.
+   ```
+
+   <br />
+
+### 2) 리소스 요청 수 줄이기
+
+CSS, 자바스크립트, 이미지 등 웹 페이지에 포함된 리소스는 서버 요청 후 다운로드되어야 사용할 수 있다. <br />
+리소스 파일 하나를 요청하는 데 많은 시간이 소요되므로, 필요한 요청만 할 수 있도록 최적화해야 한다.
+
+![](./images/imgdelay.png) <br />
+
+1. <b>\* 이미지 스프라이트</b><br /><br />
+
+이미지 스프라이트는 여러 개 이미지를 하나로 만들고, CSS의 background-position 속성을 사용해 부분 이미지를 사용하는 방법이다.<br />
+아래 CSS에서 사용된 sprite.png가 스프라이트 이미지다. 이 이미지 스프라이트 기법을 사용하면 웹 페이지를 보다 빨리 보여줄 수 있다.<br />
+
+![](./images/sprite.png) <br />
+
+```js
+<button class="sprite">yes</button>
+  .btn {
+    background-image: url(../images/sprite.png);
+    background-position: 20px 20px;
+    width: 10px;
+    height: 10px;
+  }
+```
+
+2. <b>\* css, 자바스크립트 번들하기</b><br /><br />
+
+모듈 기반의 개발 방식이 등장하기 이전까지 분리된 여러 개의 리소스 파일을 가져와 사용했었다.<br />
+아래 최적화 하기 전 예제를 살펴보면, 5번 이상의 리소스 요청(CSS 파일 2번, 자바스크립트 파일 3번)이 발생한다.<br />
+이 경우에는 webpack과 같은 번들러를 사용하여 CSS, 자바스크립트 파일 요청을 줄일 수 있다.<br />
+번들러는 여러 개의 모듈 파일을 하나로 묶어서 1개 파일로 생성해주는데 이것을 번들 파일이라고 한다.<br />
+이 번들 파일을 사용하여 리소스 요청을 줄일 수 있다.<br />
+
+```html
+// 번들전
+<html>
+  <head>
+    <link href="style1.css" rel="stylesheet" />
+    <link href="style2.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root">...</div>
+    <script async src="react1.js" type="text/javascript"></script>
+    <script async src="react2.js" type="text/javascript"></script>
+    <script async src="react3.js" type="text/javascript"></script>
+  </body>
+</html>
+```
+
+```html
+// 번들후
+<html>
+  <head>
+    <link href="bundle.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root">...</div>
+    <script async src="bundle.js" type="text/javascript"></script>
+  </body>
+</html>
+```
+
+3. <b>\* 내부 스타일시트 사용하기</b><br /><br />
+
+`<link> 태그`로 외부 스타일시트를 가져오는 대신, 문서 안에서 `<style> 태그`를 사용할 수 있다.<br />
+이러한 사용 방법을 내부 스타일시트라고 하며, 외부 스타일시트를 가져올 때 발생하는 요청 횟수를 줄일 수 있다.<br />
+단, 내부 스타일시트를 사용하면 리소스 캐시를 사용할 수 없어서 HTML에 CSS가 매번 포함되므로 필요한 경우에만 사용한다.<br />
+
+```js
+  <html>
+    <head>
+      <style type="text/css">
+        .box {
+          background-color: orange;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="box">...</div>
+    </body>
+  </html>
+```
+
+4. <b>\* 내부 스타일시트 사용하기</b><br /><br />
+
+웹 페이지에서 사용하는 아이콘 이미지 개수가 적은 경우, 다운로드한 이미지를 사용하는 대신 이미지를 HTML, CSS에 포함해 사용할 수 있다.<br />
+Data URI로 처리할 수 있으며, 다음과 같이 HTML, CSS에서 외부 경로로 이미지를 가져오던 부분을 Base64로 변환된 URI로 대체한다.<br />
+이렇게 하면 외부 이미지를 사용하기 위해 발생하는 요청 횟수를 줄일 수 있다.<br />
+이 경우도 내부 스타일시트를 사용했을 때와 같이 캐시 문제가 있으므로 필요한 경우에만 사용한다.<br />
+
+```css
+  .btn{background: url('data:image/png;base64...') no-repeat 0 0;}
+  <img src="data:image/png;base64." />
+```
+
+### 3) 리소스 용량 줄이기
+
+용량이 큰 리소스도 웹 페이지 로딩 시간을 느리게 하는 원인이 된다. <br />
+각 리소스에 맞게 불필요한 데이터를 제거하고 압축하여 사용하는 것이 좋다.
+
+1. <b>\* 중복 코드 제거</b><br /><br />
+
+```js
+// common.js
+export function sleep() { ... }
+
+// react1.js
+import { sleep } from 'common.js'
+sleep();
+
+// react2.js
+import { sleep } from 'common.js'
+sleep();
+```
+
+2. <b>\* 만능 유틸 사용 주의하기</b><br /><br />
+
+lodash와 같은 만능 유틸 라이브러리를 사용할 때 주의한다.<br />
+일반적인 방식으로 가져와 사용하면 유틸 함수 전체가 포함되므로 자바스크립트 파일 용량이 커진다.<br />
+이 경우에 필요한 함수만 부분적으로 가져올 수 있으며 용량이 늘어나는 문제를 해결해준다.<br />
+그리고 되도록 사용하지 않는 기능이 많이 포함된 라이브러리 사용은 지양한다<br />
+
+```js
+import isEmpty from 'lodash/isEmpty'
+
+isEmpty(null)
+```
+
+2. <b>\* HTML 마크업 최적화</b><br /><br />
+
+HTML은 태그의 중첩을 최소화하여 단순하게 구성한다. <br />
+또한 공백, 주석 등을 제거하여 사용한다. 권장하는 DOM 트리의 노드 수는 전체 1500개 미만, 최대 깊이는 32개, 자식 노드를 가지는 부모 노드는 60개 미만이다.<br />
+불필요한 마크업 사용으로 인해 DOM 트리가 커지는 것을 막고, HTML 파일 용량이 늘어나지 않도록 해야 한다.<br />
+
+3. <b>\* 간결한 CSS 선택자 사용</b><br /><br />
+
+스타일을 적용할 때 간결한 CSS 선택자를 사용해 최적화한다.<br />
+ID 대신 클래스 선택자를 사용하면 중복되는 스타일을 묶어서 처리할 수 있다.<br />
+선택자는 최소화여 사용한다<br />
+
+4. <b>\* 압축(Minify)하여 사용하기</b><br /><br />
+
+HTML, 자바스크립트, CSS 모두 압축해서 사용할 수 있으며, 불필요한 주석이나 공백 등을 제거한 다음 난독화하여 사용한다. <br />
+webpack 플러그인과 같은 도구로 처리할 수 있다. <br />
