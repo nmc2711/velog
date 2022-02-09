@@ -1,5 +1,5 @@
 ---
-title: '클린코드 자바스크립트 1 DAY'
+title: '클린코드 자바스크립트 STEP 1'
 date: 2022-02-08 16:21:13
 category: 'javascript'
 draft: false
@@ -122,4 +122,47 @@ console.log(person) // { name: '오징어', age: 28 }
 그리고 객체는 의외로 재할당을 하는 경우가 드물다.<br />
 따라서 변수를 선언할 때에는 일단 const 키워드를 사용하도록 하자.<br />
 반드시 재할당이 필요하다면(반드시 재할당이 필요한지 한번 생각해 볼 일이다.)<br />
-그때 const를 let 키워드로 변경해도 결코 늦지 않는다.<br />
+그때 const를 let 키워드로 변경해도 결코 늦지 않는다.<br /><br />
+
+### \* 03 - 전역 공간 사용 최소화
+
+<br />
+전역 공간이 무엇일까?<br />
+
+전역공간은 말그대로 (최상위 공간)이다. - 브러우저 환경에서는 <b>window</b>, Node 환경에서는 <b>global</b>라고 할 수 있다.
+
+```js
+// global.html
+
+...
+
+<body>
+  <script src="./index.js" />
+  <script src="./index-1.js" />
+</body>
+
+...
+
+// index.js
+var globalVar = 'global';
+
+console.log(globalVar) // global
+
+
+// index-1.js
+
+console.log(window.globalVar) // global
+console.log(globalVar) // global
+```
+
+<br />
+index.js에서 var를 통하여 선언한 변수가 index-1.js 에서도 접근이 가능하고, 몽키패치로 인해 <br />
+window.~로도 접근이 오류없이 접근이 가능하다. <br />
+파일을 나눈다고 할지라도 scope자체가 나뉘어 지지 않고 공유된다는 의미이다. <br /><br />
+
+그렇다면 어떻게 주의 하라는 걸까? <br />
+
+1. 전역 변수사용을 지양해야 할것이다.
+2. 지역 변수사용을 하도록 한다.
+3. winodw, global에대한 직접적인 조작을 지양한다.
+4. IIFE(즉시실행함수), Module, Closure를 통하여 명확한 스코프를 나눈다.
