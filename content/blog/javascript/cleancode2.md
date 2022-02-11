@@ -52,4 +52,55 @@ function getObject() {
 습관처럼 사용되면 큰규모의 개발에서 임시변수 사용은 <b style="color:red">치명적</b>이다. <br />
 임시변수는 대부분 접근과 명령에 대한 로직이 많기 때문에 디버깅이 어렵고, 뭉치가 많기때문에 유지보수 또한 힘들어 진다.<br />
 기능에 맞는 함수의 세분화, 명료한 반환, map,filter,reduce .. 와 같은 고차 함수를 사용하며 명령형이 아닌 선언형 코드 스타일의 <br />
-전환으로 임시변수의 습관적 사용을 제한할 수 있다. <br />
+전환으로 임시변수의 습관적 사용을 제한할 수 있다. <br /><br />
+
+### \* 05 - 호이스팅 주의하기
+
+<br />
+호의스팅? <br /><br />
+간단하게, 런타임시기에 선언과 할당이 분리된 것을 뜻한다. (작성자가 기대하는 스코프범위를 벗어난다.)<br />
+직관적인 예를 들면 var를 사용한 변수가 초기화가 제대로 되어 있지 않았을때, undefined로 최상단에 끌어올려줄 수 있는것<br />
+(예상치 못하게 선언부만 최상단으로 옮겨지는 현상)
+
+```js
+var global = 0
+function outer() {
+  console.log(global) // undefined 호이스팅(메모리공간을 선언전에 할당)
+
+  function inner() {
+    var global = 10
+    console.log(global) // 10
+  }
+
+  inner()
+
+  global = 1
+
+  console.log(global) // 1
+}
+
+outer()
+```
+
+```js
+var sum
+
+console.log(sum()) // 3
+console.log(typeof sum) // function..? 함수도 호이스팅 된다.
+
+function sum() {
+  return 1 + 2
+}
+```
+
+간단한 해결방법으로는 함수스코프대신 블록스코프를 쓰거나 선언과 동시에 할당을 마무리 해줘야 한다.(<b>const</b> 사용) <br />
+
+```js
+var sum = 10
+
+console.log(sum) // 이전과 다르게 6이 아니고 10
+
+function sum() {
+  return 1 + 2 + 3
+}
+```
