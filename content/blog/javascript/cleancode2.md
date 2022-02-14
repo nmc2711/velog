@@ -104,3 +104,74 @@ function sum() {
   return 1 + 2 + 3
 }
 ```
+
+<br />
+
+### \* 06 - 타입 검사
+
+<br />
+<h3>1. typeof</h3>
+
+typeof 연산자는 검사대상의 타입을 문자열로 반환한다.<br />
+자바스크립트의 타입정의는 크게 Primitive(원시값), Reference(참조값) 분리할 수 있는데,<br />
+동적인 타입을 갖는 Reference는 기대하는 타입을 확인할 수 없는 경우가 발생한다.<br />
+
+```js
+typeof '자바스크립트' // 'string'
+typeof 9999 // 'number'
+typeof undefined // 'undefined'
+typeof Symbol() // 'symbol'
+
+// 기대하는 타입을 확인할 수 없는 예로
+// 1. Wrapper 객체로된 원시값 / class / null
+const title = new String('스파이더맨')
+typeof title // 'object' ??
+
+function myFunction() {}
+class MyClass {}
+
+typeof myFunction // 'function'
+typeof MyClass // 'function' ??
+typeof null // 'object' ??
+```
+
+<br />
+<h3>2. instanceof</h3>
+
+instanceof 연산자는 객체의 프로토타입 체인을 검사하는 연산자이다.
+검사하는 대상의 참조값을 어떤 객체의 인스턴스인지 여부를 판단하여 반환한다.
+
+```js
+const arr = []
+const myFunc = function() {}
+const date = new Date()
+
+arr instanceof Array // true
+myFunc instanceof Function // true
+date instanceof Date // true
+
+arr instanceof Object // true ??
+myFunc instanceof Object // true ??
+date instanceof Object // true ??
+```
+
+사실 모든 인스턴스는 자바스크립트 특성상 본질적으로 객체의 인스턴스이다. <br />
+함수, 배열, 데이트 객체 같은경우 프로토타입 체인을 타기 때문에 결국 최상위의 Object를 가르킨다.<br />
+
+<h3>3. Object.prototype.toString</h3>
+
+Object.prototype.toString는 객체를 나타내는 문자열을 반환한다.<br />
+여기에 .call 메소드를 사용하면 오버라이드된 모든 타입의 값의 타입을 알아낼 수 있다.<br />
+
+```js
+function myFunction() {}
+const date = new Date()
+class MyClass {}
+
+Object.prototype.toString.call(new String('javascript')) // [object String]
+Object.prototype.toString.call(myFunction()) // [object Function]
+Object.prototype.toString.call(date) // [object Date]
+Object.prototype.toString.call(undefined)) // [object Undefined]
+Object.prototype.toString.call(null)) // [object Null]
+Object.prototype.toString.call(MyClass)) // [object Function] ??
+```
