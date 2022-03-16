@@ -41,5 +41,8 @@ Yarn Berry에서 의존성을 버전 관리에 포함하는 것을 Zero-Install,
 (https://yarnpkg.com/features/zero-installs)
 
 <br />
-
+참고문언: <br>
 https://toss.tech/article/node-modules-and-yarn-berry
+
+세팅연습: <br />
+https://github.com/nmc2711/yarn-berry-first-setting
