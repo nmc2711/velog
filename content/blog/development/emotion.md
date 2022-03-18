@@ -26,3 +26,26 @@ css에 js를 결합한다는 아이디어 하나만으로 css를 아주 편하�
 사람들이 요즘 가장 많이 쓰는 방법은 styled-components를 이용한 방법으로, css를 일일이 주기 보다는 어떠한 커스텀태그를 만들어서 그 안에 내부적으로 css를 적용시켜놓는 것이다.
 
 이를테면 <redbutton>Red Button</redbutton>이라는 태그를 입력하면 css를 따로 주지 않아도 빨간 버튼이 나오는 방식이다.
+
+<br />
+
+// sample
+
+```javascript
+import { css, jsx } from '@emotion/react'
+
+const divStyle = css`
+  background-color: hotpink;
+  font-size: 24px;
+  border-radius: 4px;
+  padding: 32px;
+  text-align: center;
+  &:hover {
+    color: white;
+  }
+`
+
+export default function App() {
+  return <div css={divStyle}>Hover to change color.</div>
+}
+```
