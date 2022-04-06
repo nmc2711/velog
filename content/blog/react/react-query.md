@@ -8,7 +8,19 @@ draft: false
 <h3 style="color:#0230">React-query란?</h3>
 
 React를 위한 데이터 동기화 라이브러리 <br />
-전역 상태를 건드리지 않고 어플리케이션에서 데이터를 가져오고 업데이트할 수 있다. <br />
+react-query는 서버의 값을 클라이언트에 가져오거나, 캐싱, 값 업데이트, 에러핸들링 등 비동기 과정을 더욱 편하게 하는데 사용된다.<br />
+
+<h3 style="color:#0230">React-query를 사용하는 이유는 뭘까?</h3>
+
+위와같은 정형적인 react-query의 소개를 바탕으로 사용하는 경우가 크겠지만, 실제 업무에서 프로젝트가 커지게 되면<br />
+client의 상태와 server로 부터 받아 가공되어 저장되는 data들의 상태를 관리하는데 큰 컴플렉스가 일어난다.<br />
+그것을 효율적이게 관리하기 위함이다.<br />
+
+<h3 style="color:#0230">React-query의 장점</h3>
+- 캐싱
+- get을 한 데이터에 대해 update를 하면 자동으로 get을 수행하는 automatic fetcher
+- 오래된 데이터라고 판단시 다시 get( invalidateQueries )
+-
 
 ```javascript
 // useQuery basic pattern
