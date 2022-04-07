@@ -98,3 +98,25 @@ export default Book;
 `startTransition`은 함수로, 리액트에 어떤 상태변화를 지연하고 싶은지 지정할 수 있다.<br />
 `isPending`은 진행 여부로, 트랜지션이 진행중인지 알 수 있다.<br />
 `timeoutMs`로 최대 3초간 이전 상태를 유지한다.<br />
+
+<br />
+
+3. useDeferredValue
+
+<br />
+`useDeferredValue`를 사용하면, 트리에서 급하지 않은 부분의 리랜더링을 지연할 수 있다.<br />
+최대 timeoutMs 동안 지연된값의 지연된 결과를 반환한다 .<br />
+느린 비동기 통신의 timeoutMs지연을 기다린 응닶값을 통해 완성된 뷰를 갱신할떄 좋을것같다.<br />
+
+```javascript
+function ProductList({ products }) {
+  const deferredProducts = useDeferredValue(products, { timeoutMs: 2000 })
+  return (
+    <ul>
+      {deferredProducts.map(product => (
+        <li>{product}</li>
+      ))}
+    </ul>
+  )
+}
+```
