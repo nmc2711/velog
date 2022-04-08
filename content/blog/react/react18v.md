@@ -104,9 +104,10 @@ export default Book;
 3. useDeferredValue
 
 <br />
+
 `useDeferredValue`를 사용하면, 트리에서 급하지 않은 부분의 리랜더링을 지연할 수 있다.<br />
 최대 timeoutMs 동안 지연된값의 지연된 결과를 반환한다 .<br />
-느린 비동기 통신의 timeoutMs지연을 기다린 응닶값을 통해 완성된 뷰를 갱신할떄 좋을것같다.<br />
+느린 비동기 통신의 timeoutMs지연을 기다린 응닶값을 통해 완성된 뷰를 갱신할떄 좋을 것 같다.<br />
 
 ```javascript
 function ProductList({ products }) {
@@ -117,6 +118,37 @@ function ProductList({ products }) {
         <li>{product}</li>
       ))}
     </ul>
+  )
+}
+```
+
+4. useSyncExternalStore
+
+<br />
+
+`useSyncExternalStore`는 동기적으로 스토어 업데이트를 강제해서 외부 스토어가 동시 읽기를 지원할 수 있는 새로운 훅. <br />
+외부 데이터 소스에 대한 구독을 구현할 때 useEffect가 필요하지 않으며 react 외부 상태와 통합되는 모든 라이브러리에 권장된다. <br />
+
+```javascript
+const firstExternalStore = useSyncExternalStore(
+  store.getSnapshot(),
+  () => store.getSnapshot().check
+)
+```
+
+<br />
+
+`useSyncExternalStore`는 두개의 함수를 인자로 받는다. <br />
+subscribes는 등록할 콜백 함수, getSnapshot 마지막 이후로 subscribe 중인 값이 렌더링 된 이후 변경되었는지, 문자열이나 숫자처럼 <br />
+immutable한 값인지, 혹은 캐시나 메모된 객체인지 확인하는데 사용된다. 이후, 훅에 의해 immutable한 값이 반환된다. <br />
+
+```javascript
+import { useSyncExternalStore } from 'react'
+
+const useStore = (store, selector) => {
+  return useSyncExternalStore(
+    store.subscribe,
+    useCallback(() => selector(store.getState(), [store, selector]))
   )
 }
 ```
