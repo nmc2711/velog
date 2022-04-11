@@ -27,3 +27,26 @@ react는 기본적으로 부모 컴포넌트가 리렌더링을 하면 자식 �
 리엑트는 state라는 값은 새로운 참조값이 아니기 때문에 이전과 같은 값이라고 인식하고 리렌더링 하지 않는다.<br />
 즉, 위 이유로 우리가 state를 바꾸고 돔을 다시 만들려면, 새로운 객체 or 배열을 만들어 새로운 참조값을 만들고, <br />
 react에게 이 값은 이전과 다른 참조값임을 알려야하는 것이다.<br />
+
+```javascript
+import produce from 'immer'
+
+const baseState = [
+  {
+    todo: 'Learn typescript',
+    done: true,
+  },
+  {
+    todo: 'Try immer',
+    done: false,
+  },
+]
+
+const nextState = produce(baseState, draftState => {
+  draftState.push({ todo: 'Tweet about it' })
+  draftState[1].done = true
+})
+```
+
+immer에서 우리가 쓸 함수는 오직 produce만 알면 된다.<br />
+2가지의 파람을 가져오고 첫번째는 수정하고 싶은 객체/배열, 두번째는 첫번째 파라미터에 할당된 객체/배열을 바꾸는 함수이다.<br />
