@@ -152,3 +152,24 @@ const useStore = (store, selector) => {
   )
 }
 ```
+
+startTransition에 래핑된 업데이트는 긴급하지 않은 것으로 처리되며 클릭이나 키 누르기와 같은 더 긴급한 업데이트가 들어오면 중단된다. <br />
+트랜지션이 사용자에 의해 중단되면 (예로 한 줄에 여러 문자를 입력), React는 완료되지 않은 오래된 렌더링 작업을 버리고 최신 업데이트만 렌더링한다.<br />
+
+useTransition: 보류 중인 상태(the pending state)를 추적하는 값을 포함한 트랜지션 시작 훅<br />
+startTransition: 훅을 사용할 수 없을 때 트랜지션을 시작하는 메서드<br />
+트랜지션은 동시성 렌더링을 선택하여 업데이트를 중단할 수 있다. <br />
+콘텐츠가 다시 중단된 경우(re-suspends)라면, 트랜지션은 백그라운드에서 트랜지션 콘텐츠가 렌더링하는 동안 현재<br /> 콘텐츠를 계속 표시하도록 React에 지시한다.<br />
+
+```javascript
+import { startTransition } from 'react'
+
+// 긴급: 어떤 입력인지 표시
+setInputValue(input)
+
+// 내부의 모든 상태 업데이트를 transitions으로 표시
+startTransition(() => {
+  // Transition: 결과를 표시
+  setSearchQuery(input)
+})
+```

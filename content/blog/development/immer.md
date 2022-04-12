@@ -50,3 +50,5 @@ const nextState = produce(baseState, draftState => {
 
 immer에서 우리가 쓸 함수는 오직 produce만 알면 된다.<br />
 2가지의 파람을 가져오고 첫번째는 수정하고 싶은 객체/배열, 두번째는 첫번째 파라미터에 할당된 객체/배열을 바꾸는 함수이다.<br />
+
+
