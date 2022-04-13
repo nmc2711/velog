@@ -153,7 +153,7 @@ const useStore = (store, selector) => {
 }
 ```
 
-startTransition에 래핑된 업데이트는 긴급하지 않은 것으로 처리되며 클릭이나 키 누르기와 같은 더 긴급한 업데이트가 들어오면 중단된다. <br />
+`startTransition`은 startTransition에 래핑된 업데이트는 긴급하지 않은 것으로 처리되며 클릭이나 키 누르기와 같은 더 긴급한 업데이트가 들어오면 중단된다. <br />
 트랜지션이 사용자에 의해 중단되면 (예로 한 줄에 여러 문자를 입력), React는 완료되지 않은 오래된 렌더링 작업을 버리고 최신 업데이트만 렌더링한다.<br />
 
 useTransition: 보류 중인 상태(the pending state)를 추적하는 값을 포함한 트랜지션 시작 훅<br />
@@ -172,4 +172,30 @@ startTransition(() => {
   // Transition: 결과를 표시
   setSearchQuery(input)
 })
+```
+
+<br />
+
+`useInsertionEffect`는 css-in-js 라이브러리가 렌더링 도중에 스타일을 삽입할 때 성능 문제를 해결할 수 있는 새로운 훅이다. <br />css-in0js 라이브러리를 사용하지 않는다면 사용할 필요가 없다. 이 훅은 dom이 한번 mutate된 이후에 실행되지만, <br />layout effect가 일어나기전에 새 레이아웃을 한번 읽는다. 이는 리액트 17 이하 버전에 있는 문제를 해결할 수 있으며, <br />리액트 18에서는 나아가 concurrent 렌더링 중에 브라우저에 리액트가 값을 반환하므로, 레이아웃을 한번더 계산할 수 있는 기회가 생겨 매우 중요하다.<br />
+
+어떻게 보면 useLayoutEffect와 비슷한데, 차이가 있다면 DOM 노드에 대한 참조에 엑세스 할 수 있다는 것이다.<br />
+
+클라이언트 사이드에서 style 태그를 생성해서 삽입할 때는 성능 이슈에 대해 민감하게 살펴보아야 한다.<br /> CSS 규칙을 추가하고 삭제한다면 이미 존재하는 모든 노드에 새로운 규칙을 적용하는 것이다. <br />이는 최적의 방법이 아니므로 많은 문제가 존재한다.
+<br />
+이를 피할 수 있는 방법은 타이밍이다. 리액트가 DOM을 변환한경우, 레이아웃에서 무언가를 읽기전 (clientWidth와 <br />같이) 또는 페인트를 위해 브라우저에 값을 전달하기 전에 DOM에 대한 다른 변경과 동일한 타이밍에 작업을 하면 된다.
+
+```javascript
+function useCSS(rule) {
+  useInsertionEffect(() => {
+    if (!isInserted.has(rule)) {
+      isInserted.add(rule)
+      document.head.appendChild(getStyleForRule(rule))
+    }
+  })
+  return rule
+}
+function Component() {
+  let className = useCSS(rule)
+  return <div className={className} />
+}
 ```
