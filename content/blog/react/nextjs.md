@@ -56,4 +56,29 @@ NEXT JS는 `클라이언트 사이드 렌더링에서 발생하는 여러 문제
 #### NEXT JS의 특징을 파해쳐 보자
 
 `PRE-RENDERING` : NEXT JS는 렌더링 서버를 자체적으로 지원하고, 기본적으로 모든페이지를 PRE-RENDER한다. 클라이언트 사이드에서 모든 작업을 수행하는 대신 미리 각페이지 대한 <br />
-HTML 뼈대 파일을 미리 만들어 성능과 SEO 측면에서 도움을 준다.
+HTML 뼈대 파일을 미리 만들어 성능과 SEO 측면에서 도움을 준다. 예를 들어 NEXT JS로 구성된 웹페이지의 개발자도구에서(ctrl+ shift + p -> disable javascript)를 하여도 <br />
+HTML 뼈대가 렌더 되는것을 볼 수 있다. 또한 getStaticProps, getStaticPaths 내장함수를 이용해 FETCH한 데이터를 미리 렌더링 서버에서 실행되어 화면이 그려지기 전에 데이터를 연동가능하다. <br />
+이렇게 NEXT JS는 최소한의 자바스크립트 코드를 사용해 HTML 화면을 먼저 생성한다. 그리고 이어 자바스크립트가 로드되면, 그때 컴포넌트와 앱 화면이 완전히 활성화 된다. 이러한 과정을 `Hydration`이라고 한다<br />
+
+`Hybrid - SSG and SSR` : NEXT JS는 두 가지 형태의 프리 렌더링을 지원한다. 정적 생성(Static Generation - SSG)과 서버 사이드 렌더링(SSR)이다. <br />
+NEXT JS에서는 성능상의 이유로 SSG 추천하지만, 각 페이지마다 어떤 종류를 택할지 선택할 수 있다. <br />
+
+- SSG: 빌드 시점에서 HTML 파일이 생성되며, 매 요청마다 재사용 된다. CDN으로 캐싱되어 사용할 수 있다.
+- SSR: HTML이 request에 따라 생성된다. 최신화된 데이터를 사용하거나 사용자 요청에 따라 데이터를 받아와야 하는 페이지에서 사용된다.
+
+#### NEXT JS IN DATA FETCHING
+
+NEXT JS 에서는 프리 렌더 단계에서 data fetching을 위해 3가지 함수를 지원한다. <br />
+
+- getStaticProps: 빌드 타임에 데이터 요청
+- getServerSideProps: 매 요청에 따라 데이터 요청
+- getStaticPaths: 요청된 데이터에 의한 다이나믹 라우팅을 명시
+
+1. getStaticProps: 각 페이지에서 async 함수로 getStaticProps가 export 되면, NEXT 서버는 빌드 시점에 이 함수를 호출하고 <br />
+   리턴한 props를 이용해 페이지를 프리 렌더링 한다. getStaticProps는 props, revalidate, notFound, redirect라는 옵셔널 키를 가진 객체를 반환한다.
+
+```typescript
+import { GetStaticProps } from 'next'
+
+export const getStaticProps: GetStaticProps = async context => {}
+```
