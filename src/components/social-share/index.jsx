@@ -19,10 +19,5 @@ export const SocialShare = ({ title, author }) => {
     return shareToFacebook(window.location.href, text)
   }
 
-  return (
-    <div className="social-share">
-      <FacebookIcon onClick={onClickFacebookIcon} />
-      <TwitterIcon onClick={onClickTwitterIcon} />
-    </div>
-  )
+  return <div className="social-share"></div>
 }
