@@ -14,7 +14,7 @@ module.exports = {
   icon: `content/assets/felog.png`, // Add your favicon
   keywords: [`blog,velog`],
   comment: {
-    disqusShortName: '', // Your disqus-short-name. check disqus.com.
+    disqusShortName: 'yest, react', // Your disqus-short-name. check disqus.com.
     utterances: 'SangHan/velog', // Your repository for archive comment
   },
   configs: {
