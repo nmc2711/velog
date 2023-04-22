@@ -2,11 +2,11 @@ module.exports = {
   title: `Yes, React !`,
   description: `Blog posted about ...`,
   author: `Hwang SangHan`,
-  introduction: `I am Hwang Sang-han, <br/>a humble and always striving front-end developer.`,
-  siteUrl: `https://yesreact.netlify.app/`, // Your blog site url
+  introduction: `I am Hwang Sang-Han, a web front-end developer who likes the answer of yes the most.`,
+  siteUrl: `https://yesreact.netlify.app/`,
   social: {
     twitter: ``, // Your Twitter account
-    github: ``, // Your GitHub account
+    github: `nmc2711`, // Your GitHub account
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
     linkedin: ``, // Your LinkedIn account
