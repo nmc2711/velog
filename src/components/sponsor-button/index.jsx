@@ -8,7 +8,7 @@ export const SponsorButton = ({ sponsorId }) => (
       className="bmc-button"
       target="_blank"
       rel="noopener noreferrer"
-      href={`https://www.buymeacoffee.com/${sponsorId}`}
+      href={`https://www.buymeacoffee.com/nmc2711`}
     >
       <img
         src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg"
